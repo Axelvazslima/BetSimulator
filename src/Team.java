@@ -1,88 +1,92 @@
 import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
- * Classe responsável por agrupar as características de um time.
+ * Responsible for a team's information.
  */
 public class Team {
 
     /**
-     * Identificador no formato: "CODIGONUMERICO-ESTADO"
+     * Id that represents the team.
      */
     private final String id;
 
     /**
-     * Nome da equipe.
+     * Team's name.
      */
-    private final String nome;
+    private final String name;
 
     /**
-     * Mascote do time.
+     * Team's name.
      */
-    private final String mascote;
+    private final String mascot;
 
     /**
-     * Conjunto de tournaments que o time participa.
+     * Set that stores the tournaments the team is registered in.
      */
-    private HashSet<Tournament> tournaments;
-
-    private int vezesEmPrimeiro;
+    private Set<Tournament> tournaments;
 
     /**
-     * Constrói um time a partir de um nome, identificador e um mascote.
-     * @param id Identificador textual.
-     * @param nome Nome da equipe.
-     * @param mascote Mascote da equipe.
+     * Counts how many times the team was betted by the users as the bet of the tournament.
      */
-    public Team(String id, String nome, String mascote){
+    private int timesInFirst;
+
+    /**
+     * Builds a team based on it's name, id and mascot.
+     * @param id Textual id.
+     * @param name Team's name.
+     * @param mascot Team's mascot.
+     */
+    public Team(String id, String name, String mascot){
             this.id = id;
-            this.nome = nome;
-            this.mascote = mascote;
+            this.name = name;
+            this.mascot = mascot;
             this.tournaments = new HashSet<>();
-            vezesEmPrimeiro = 0;
+            this.timesInFirst = 0;
     }
 
     /**
-     * @return Conjunto de times que o time está participando.
+     * @return Set containing the tournaments the team is playing.
      */
-    public HashSet<Tournament> getCampeonatos() {
-        return tournaments;
+    public Set<Tournament> getTournaments() {
+        return this.tournaments;
     }
 
     /**
-     * Pega o código da equipe.
-     * @return Código do Team.
+     * Get the team's id.
+     * @return Team's id.
      */
     public String getId() {
-        return id;
+        return this.id;
     }
 
     /**
-     * Pega o mascote da equipe.
-     * @return Mascote do Team.
+     * Get the team's mascot.
+     * @return Team's mascot.
      */
-    public String getMascote() {
-        return mascote;
+    public String getMascot() {
+        return this.mascot;
     }
 
     /**
-     * Inscreve um time em um Tournament.
-     * @param tournament Tournament no qual o Team será inscrito.
-     * @return Mensagem dizendo se a inscrição foi bem sucedida.
+     * Signs a team in a tournament.
+     * @param tournament Tournament that the team is going to be registered in.
+     * @return Text telling the user if the registration was successful.
      */
     public String addTeamInTournament(Tournament tournament) {
         if (this.tournaments.contains(tournament)){
-            return "CADASTRO NÃO REALIZADO. O TIME JÁ ESTAVA NO CAMPEONATO!";
+            return "THE REGISTRATION COULD NOT BE COMPLETED. THE TEAM WAS ALREADY IN THE TOURNAMENT!";
         } else {
             this.tournaments.add(tournament);
-            return "TIME INSCRITO NO CAMPEONATO COM SUCESSO!";
+            return "TEAM SUCCESSFULLY REGISTERED IN THE TOURNAMENT!";
         }
     }
 
     /**
-     * Verifica igualdade entre objetos.
-     * @param o Objeto a ser comparado.
-     * @return Se os objeto são iguais ou não.
+     * Verify objects' equality.
+     * @param o Object that is going to be compared with this one.
+     * @return True, if they are equal, false if they are not.
      */
     @Override
     public boolean equals(Object o) {
@@ -93,8 +97,8 @@ public class Team {
     }
 
     /**
-     * Código usado por Java em comparações.
-     * @return Código identificador do objeto a partir da id.
+     * Integer code used by Java to make comparisons.
+     * @return Object's integer code using hash.
      */
     @Override
     public int hashCode() {
@@ -102,34 +106,34 @@ public class Team {
     }
 
     /**
-     * Incremanta, mais um, a quantidade de vezes que o time é visto como favorito da competição por apostadores.
+     * Adds one to the variable that counts how many times the team was betted as the first place of a tournament.
      */
-    public void incrementaVezesEmPrimeiro(){
-        this.vezesEmPrimeiro++;
+    public void upByOneTimesInFirst(){
+        this.timesInFirst++;
     }
 
     /**
-     * Pega a quantidade de vezes que o time apareceu em primeiro.
-     * @return Quantas vezes, um inteiro, o time apareceu em primeiro.
+     * Get the times the team was betted as the best team in the tournament.
+     * @return Integer with the amount of times the team was betted as the winner of it all.
      */
-    public int getVezesEmPrimeiro() {
-        return vezesEmPrimeiro;
+    public int getTimesInFirst() {
+        return this.timesInFirst;
     }
 
     /**
-     * @return Nome da Equipe.
+     * @return Team's name.
      */
     public String getName() {
-        return nome;
+        return this.name;
     }
 
     /**
-     * Representação textual do Team.
-     * @return Representação textual do Team.
+     * Team's textual representation.
+     * @return Team's textual representation.
      */
     @Override
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        return sb.append("[").append(this.id).append("] ").append(this.nome).append(" / ").append(this.mascote).toString();
+        return sb.append("[").append(this.id).append("] ").append(this.name).append(" / ").append(this.mascot).toString();
     }
 }

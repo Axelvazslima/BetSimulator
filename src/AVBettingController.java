@@ -153,7 +153,7 @@ public class AVBettingController {
 
         if (value <= 0) return "INSIRA UM VALOR VÁLIDO. O VALOR DA APOSTA DEVE SER UM NÚMERO MAIOR QUE 0.";
 
-        if (position == 1) team.incrementaVezesEmPrimeiro();
+        if (position == 1) team.upByOneTimesInFirst();
         this.bets.add(new Bet(team, tournament, position, value));
         return "APOSTA REGISTRADA!";
     }
@@ -194,7 +194,7 @@ public class AVBettingController {
         for (Bet a :
                 this.bets) {
             i++;
-            out = String.format("\n%d. [%s] %s / %s\n%s\n%d/%d\nR$ %.2f\n", i, a.getTeam().getId(), a.getTeam().getName(), a.getTeam().getMascote(), a.getTournament().getName(), a.getTournament().getTeams().size(), a.getTournament().getLIMIT_PARTICIPANTS(), a.getValue());
+            out = String.format("\n%d. [%s] %s / %s\n%s\n%d/%d\nR$ %.2f\n", i, a.getTeam().getId(), a.getTeam().getName(), a.getTeam().getMascot(), a.getTournament().getName(), a.getTournament().getTeams().size(), a.getTournament().getLIMIT_PARTICIPANTS(), a.getValue());
             sb.append(out);
         }
         if (this.bets.isEmpty()) out = "NÃO HÁ NENHUMA APOSTA REGISTRADA.";
@@ -208,7 +208,7 @@ public class AVBettingController {
         String out = null;
         for (Team team :
                 this.teams.values()) {
-            sb.append(team.getName()).append(" / ").append(team.getVezesEmPrimeiro());
+            sb.append(team.getName()).append(" / ").append(team.getTimesInFirst());
             curIndex++;
             if (curIndex < teams.size()) sb.append("\n");
             out = sb.toString();
@@ -229,12 +229,12 @@ public class AVBettingController {
         StringBuilder sb = new StringBuilder();
         if (team == null) {
             sb.append("TIME NÃO EXISTE.");
-        } else if (team.getCampeonatos().isEmpty()) {
+        } else if (team.getTournaments().isEmpty()) {
             sb.append("O TIME NÃO ESTÁ INSCRITO EM NENHUM CAMPEONATO!");
         } else {
             sb.append(String.format("Campeonatos do %s:\n", team.getName()));
             for (Tournament c:
-                    team.getCampeonatos()) {
+                    team.getTournaments()) {
                 sb.append(String.format("* %s - %d/%d\n", c.getName(), c.getTeams().size(), c.getLIMIT_PARTICIPANTS()));
             }
         }

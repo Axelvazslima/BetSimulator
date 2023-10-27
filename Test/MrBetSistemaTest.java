@@ -18,7 +18,7 @@ class MrBetSistemaTest {
     void stringIdParaTimeTest() {
         assertEquals("007_JB", sistema.idStringToTeam("007_JB").getId());
         assertEquals("Exemplo", sistema.idStringToTeam("007_JB").getName());
-        assertEquals("Aston Martin", sistema.idStringToTeam("007_JB").getMascote());
+        assertEquals("Aston Martin", sistema.idStringToTeam("007_JB").getMascot());
     }
 
     @Test
@@ -40,7 +40,7 @@ class MrBetSistemaTest {
     @Test
     void adicionaTimeNovoTest() {
         assertNull(sistema.idStringToTeam("322_AM"));
-        sistema.adicionaTime("322_AM", "Am", "Cachorro");
+        sistema.registerTeam("322_AM", "Am", "Cachorro");
         assertNotNull(sistema.idStringToTeam("322_AM"));
         assertEquals(sistema.idStringToTeam("322_AM").getName(), "Am");
         assertNotNull(sistema.idStringToTeam("007_JB"));
@@ -48,23 +48,23 @@ class MrBetSistemaTest {
 
     @Test
     void adicionaTimeJaExistenteTest() {
-        assertEquals("TIME JÁ EXISTE!", sistema.adicionaTime("007_JB", "A", "Aston Martin"));
+        assertEquals("TIME JÁ EXISTE!", sistema.registerTeam("007_JB", "A", "Aston Martin"));
         assertEquals("Exemplo", sistema.idStringToTeam("007_JB").getName());
     }
 
     @Test
     void adicionaTimeIdVazio() {
-        assertEquals("NÃO É POSSÍVEL CRIAR UM TIME SEM UM IDENTIFICADOR TEXTUAL!", sistema.adicionaTime("", "Frank Sinatra", "Ema"));
+        assertEquals("NÃO É POSSÍVEL CRIAR UM TIME SEM UM IDENTIFICADOR TEXTUAL!", sistema.registerTeam("", "Frank Sinatra", "Ema"));
     }
 
     @Test
     void adicionaTimeNomeVazioTest() {
-        assertEquals("NÃO É POSSÍVEL CRIAR UM TIME SEM NOME!", sistema.adicionaTime("007_JB", "", "Aston Martin"));
+        assertEquals("NÃO É POSSÍVEL CRIAR UM TIME SEM NOME!", sistema.registerTeam("007_JB", "", "Aston Martin"));
     }
 
     @Test
     void adicionaTimeSemMascote() {
-        assertEquals("NÃO É POSSÍVEL CRIAR UM TIME SEM MASCOTE!", sistema.adicionaTime("322_AB", "Nome", ""));
+        assertEquals("NÃO É POSSÍVEL CRIAR UM TIME SEM MASCOTE!", sistema.registerTeam("322_AB", "Nome", ""));
     }
 
     @Test
@@ -150,7 +150,7 @@ class MrBetSistemaTest {
 
     @Test
     void verificaTimeEmCampeonatoTimeParticipaTest(){
-        sistema.adicionaTimeEmCampeonato("007_JB", "NBA");
+        sistema.addTeamInTournament("007_JB", "NBA");
         assertEquals(sistema.checkIfTeamIsInASpecificTournament("007_JB", "NBA"), "O TIME ESTÁ NO CAMPEONATO!");
     }
 }
