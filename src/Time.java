@@ -22,9 +22,9 @@ public class Time {
     private final String mascote;
 
     /**
-     * Conjunto de campeonatos que o time participa.
+     * Conjunto de tournaments que o time participa.
      */
-    private HashSet<Campeonato> campeonatos;
+    private HashSet<Tournament> tournaments;
 
     private int vezesEmPrimeiro;
 
@@ -38,15 +38,15 @@ public class Time {
             this.id = id;
             this.nome = nome;
             this.mascote = mascote;
-            this.campeonatos = new HashSet<>();
+            this.tournaments = new HashSet<>();
             vezesEmPrimeiro = 0;
     }
 
     /**
      * @return Conjunto de times que o time está participando.
      */
-    public HashSet<Campeonato> getCampeonatos() {
-        return campeonatos;
+    public HashSet<Tournament> getCampeonatos() {
+        return tournaments;
     }
 
     /**
@@ -66,15 +66,15 @@ public class Time {
     }
 
     /**
-     * Inscreve um time em um Campeonato.
-     * @param campeonato Campeonato no qual o Time será inscrito.
+     * Inscreve um time em um Tournament.
+     * @param tournament Tournament no qual o Time será inscrito.
      * @return Mensagem dizendo se a inscrição foi bem sucedida.
      */
-    public String adicionaCampeonato(Campeonato campeonato) {
-        if (this.campeonatos.contains(campeonato)){
+    public String adicionaCampeonato(Tournament tournament) {
+        if (this.tournaments.contains(tournament)){
             return "CADASTRO NÃO REALIZADO. O TIME JÁ ESTAVA NO CAMPEONATO!";
         } else {
-            this.campeonatos.add(campeonato);
+            this.tournaments.add(tournament);
             return "TIME INSCRITO NO CAMPEONATO COM SUCESSO!";
         }
     }

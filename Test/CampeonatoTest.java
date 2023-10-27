@@ -1,45 +1,44 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CampeonatoTest {
-    Campeonato campeonato;
+    Tournament tournament;
 
     @BeforeEach
     void setUp() {
-        campeonato = new Campeonato("NBA", 30);
-        campeonato.adicionaTime(new Time("BUCKS", "Milwaukee Bucks", "Veado"));
+        tournament = new Tournament("NBA", 30);
+        tournament.adicionaTime(new Time("BUCKS", "Milwaukee Bucks", "Veado"));
     }
 
     @Test
     void adicionaTime() {
-        assertEquals("TIME CADASTRADO COM SUCESSO!", campeonato.adicionaTime(new Time("NYK", "New York Knicks", "Empire State Building")));
+        assertEquals("TIME CADASTRADO COM SUCESSO!", tournament.adicionaTime(new Time("NYK", "New York Knicks", "Empire State Building")));
     }
 
     @Test
     void getNome() {
-        assertEquals("NBA", campeonato.getNome());
+        assertEquals("NBA", tournament.getName());
     }
 
     @Test
     void verificaTimeEmCampeonato() {
-        assertEquals("O TIME ESTÁ NO CAMPEONATO!", campeonato.verificaTimeEmCampeonato(new Time("BUCKS", "Milwaukee Bucks", "Veado")));
+        assertEquals("O TIME ESTÁ NO CAMPEONATO!", tournament.verificaTimeEmCampeonato(new Time("BUCKS", "Milwaukee Bucks", "Veado")));
     }
 
     @Test
     void verificaTimeInexistenteEmCampeonato() {
-        assertEquals("O TIME NÃO ESTÁ NO CAMPEONATO!", campeonato.verificaTimeEmCampeonato(new Time("RMD", "Real Madrid", "Sr. Z")));
+        assertEquals("O TIME NÃO ESTÁ NO CAMPEONATO!", tournament.verificaTimeEmCampeonato(new Time("RMD", "Real Madrid", "Sr. Z")));
     }
 
     @Test
     void getLIMITEDETIMES() {
-        assertEquals(30, campeonato.getLIMITEDETIMES());
+        assertEquals(30, tournament.getLIMITEDETIMES());
     }
 
     @Test
     void getTimes() {
-        assertEquals(1, campeonato.getTimes().size());
+        assertEquals(1, tournament.getTeams().size());
     }
 }

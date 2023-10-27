@@ -1,33 +1,32 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class ApostaTest {
-    Aposta aposta;
+class BetTest {
+    Bet bet;
     Time time;
-    Campeonato campeonato;
+    Tournament tournament;
 
     @BeforeEach
     void setUp() {
         time = new Time("322_AM", "Am", "Cachorro");
-        campeonato = new Campeonato("NBA", 30);
-        aposta = new Aposta(time, campeonato, 1, 100.00);
+        tournament = new Tournament("NBA", 30);
+        bet = new Bet(time, tournament, 1, 100.00);
     }
 
     @Test
     void getValorTest() {
-        assertEquals(100.00, aposta.getValor());
+        assertEquals(100.00, bet.getValor());
     }
 
     @Test
     void getTimeTest() {
-        assertEquals("Am", aposta.getTime().getNome());
+        assertEquals("Am", bet.getTime().getNome());
     }
 
     @Test
     void getCampeonatoTest() {
-        assertEquals("NBA", aposta.getCampeonato().getNome());
+        assertEquals("NBA", bet.getCampeonato().getName());
     }
 }

@@ -1,7 +1,7 @@
 /**
  * Responsável por organizar as apostas.
  */
-public class Aposta {
+public class Bet {
 
     /**
      * Time da aposta.
@@ -9,12 +9,12 @@ public class Aposta {
     private Time time;
 
     /**
-     * Campeonato da aposta.
+     * Tournament da aposta.
      */
-    private Campeonato campeonato;
+    private Tournament tournament;
 
     /**
-     * Colocação do time na tabela do campeonato na aposta.
+     * Colocação do time na tabela do tournament na aposta.
      */
     private int colocacao;
 
@@ -24,15 +24,15 @@ public class Aposta {
     private Double valor;
 
     /**
-     * Constrói uma aposta a partir de um Time, um Campeonato, uma colocação e um valor monetário.
+     * Constrói uma aposta a partir de um Time, um Tournament, uma colocação e um valor monetário.
      * @param time Time.
-     * @param campeonato Campeonato.
-     * @param colocacao Colocação do time na tabela do campeonato.
+     * @param tournament Tournament.
+     * @param colocacao Colocação do time na tabela do tournament.
      * @param valor Valor monetário apostado.
      */
-    public Aposta(Time time, Campeonato campeonato, int colocacao, Double valor){
+    public Bet(Time time, Tournament tournament, int colocacao, Double valor){
         this.time = time;
-        this.campeonato = campeonato;
+        this.tournament = tournament;
         this.colocacao = colocacao;
         this.valor = valor;
     }
@@ -54,10 +54,10 @@ public class Aposta {
     }
 
     /**
-     * Pega o campeonato que sobre o qual a aposta é realizada.
-     * @return Campeonato presente na aposta.
+     * Pega o tournament que sobre o qual a aposta é realizada.
+     * @return Tournament presente na aposta.
      */
-    public Campeonato getCampeonato() {
-        return campeonato;
+    public Tournament getCampeonato() {
+        return tournament;
     }
 }
