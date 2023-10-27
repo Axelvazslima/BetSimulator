@@ -4,7 +4,7 @@ import java.util.Objects;
 /**
  * Classe responsável por agrupar as características de um time.
  */
-public class Time {
+public class Team {
 
     /**
      * Identificador no formato: "CODIGONUMERICO-ESTADO"
@@ -34,7 +34,7 @@ public class Time {
      * @param nome Nome da equipe.
      * @param mascote Mascote da equipe.
      */
-    public Time(String id, String nome, String mascote){
+    public Team(String id, String nome, String mascote){
             this.id = id;
             this.nome = nome;
             this.mascote = mascote;
@@ -51,7 +51,7 @@ public class Time {
 
     /**
      * Pega o código da equipe.
-     * @return Código do Time.
+     * @return Código do Team.
      */
     public String getId() {
         return id;
@@ -59,7 +59,7 @@ public class Time {
 
     /**
      * Pega o mascote da equipe.
-     * @return Mascote do Time.
+     * @return Mascote do Team.
      */
     public String getMascote() {
         return mascote;
@@ -67,10 +67,10 @@ public class Time {
 
     /**
      * Inscreve um time em um Tournament.
-     * @param tournament Tournament no qual o Time será inscrito.
+     * @param tournament Tournament no qual o Team será inscrito.
      * @return Mensagem dizendo se a inscrição foi bem sucedida.
      */
-    public String adicionaCampeonato(Tournament tournament) {
+    public String addTeamInTournament(Tournament tournament) {
         if (this.tournaments.contains(tournament)){
             return "CADASTRO NÃO REALIZADO. O TIME JÁ ESTAVA NO CAMPEONATO!";
         } else {
@@ -88,8 +88,8 @@ public class Time {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Time time = (Time) o;
-        return Objects.equals(id, time.id);
+        Team team = (Team) o;
+        return Objects.equals(id, team.id);
     }
 
     /**
@@ -119,13 +119,13 @@ public class Time {
     /**
      * @return Nome da Equipe.
      */
-    public String getNome() {
+    public String getName() {
         return nome;
     }
 
     /**
-     * Representação textual do Time.
-     * @return Representação textual do Time.
+     * Representação textual do Team.
+     * @return Representação textual do Team.
      */
     @Override
     public String toString(){

@@ -94,7 +94,7 @@ public class MainAVBetting {
     private static void getTeamsInformation(Scanner sc, AVBettingController controller){
         System.out.print("\nTeam's id: ");
         String name = sc.nextLine().toUpperCase();
-        Time team = controller.idStringToTeam(name);
+        Team team = controller.idStringToTeam(name);
         System.out.println(controller.getTeam(team));
     }
 
@@ -156,7 +156,7 @@ public class MainAVBetting {
     private static void showTeamTournaments(Scanner sc, AVBettingController controller){
         System.out.print("\nTeam's id: ");
         String id = sc.nextLine().toUpperCase();
-        Time team = controller.idStringToTeam(id);
+        Team team = controller.idStringToTeam(id);
         System.out.println(controller.showTeamTournaments(team));
     }
 

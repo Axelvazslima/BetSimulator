@@ -10,7 +10,7 @@ public class AVBettingController {
     /**
      * Mapa de teams.
      */
-    private HashMap<String, Time> teams;
+    private HashMap<String, Team> teams;
 
     /**
      * Mapa de tournaments.
@@ -32,11 +32,11 @@ public class AVBettingController {
     }
 
     /**
-     * Pega o Time com o name desejado, caso ele exista.
-     * @param id Código identificador do Time.
-     * @return Time com o name desejado.
+     * Pega o Team com o name desejado, caso ele exista.
+     * @param id Código identificador do Team.
+     * @return Team com o name desejado.
      */
-    public Time idStringToTeam(String id) {
+    public Team idStringToTeam(String id) {
         return teams.get(id);
     }
 
@@ -51,28 +51,28 @@ public class AVBettingController {
 
     /**
      * Adiciona um time a um campeonato, tendo uma saída personalizada para cada caso.
-     * @param teamId Código identificador do Time a ser adicionado no campeonato
+     * @param teamId Código identificador do Team a ser adicionado no campeonato
      * @param campeonatoNome Nome do Tournament que receberá um time.
      */
     public String addTeamInTournament(String teamId, String campeonatoNome){
-        Time time = idStringToTeam(teamId);
-        if(time == null) return "CADASTRO NÃO REALIZADO. TIME NÃO EXISTE!";
+        Team team = idStringToTeam(teamId);
+        if(team == null) return "CADASTRO NÃO REALIZADO. TIME NÃO EXISTE!";
 
         Tournament tournament = stringNomeParaCampeonato(campeonatoNome);
         if (tournament == null) return "CADASTRO NÃO REALIZADO. CAMPEONATO NÃO EXISTE!";
 
-        if (tournament.getTeams().size() >= tournament.getLIMITEDETIMES()) return "CADASTRO NÃO REALIZADO. TODOS OS TIMES DESSE CAMPEONATO JÁ FORAM INCLUÍDOS!";
+        if (tournament.getTeams().size() >= tournament.getLIMIT_PARTICIPANTS()) return "CADASTRO NÃO REALIZADO. TODOS OS TIMES DESSE CAMPEONATO JÁ FORAM INCLUÍDOS!";
 
-        if (tournament.getTeams().contains(time)) return "CADASTRO NÃO REALIZADO. TIME JÁ PRESENTE NO CAMPEONATO!";
+        if (tournament.getTeams().contains(team)) return "CADASTRO NÃO REALIZADO. TIME JÁ PRESENTE NO CAMPEONATO!";
 
-        return tournament.addTeamInTheTournament(time);
+        return tournament.addTeamInTheTournament(team);
     }
 
     /**
      * Cria time e o adiciona no conjunto de teams.
-     * @param id Identificador do Time.
-     * @param name Nome do Time.
-     * @param mascot Mascote do Time.
+     * @param id Identificador do Team.
+     * @param name Nome do Team.
+     * @param mascot Mascote do Team.
      * @return Se a operação foi bem sucedida ou não.
      */
     public String registerTeam (String id, String name, String mascot){
@@ -80,7 +80,7 @@ public class AVBettingController {
         if (name.length() == 0) return "NÃO É POSSÍVEL CRIAR UM TIME SEM NOME!";
         if (mascot.length() == 0) return "NÃO É POSSÍVEL CRIAR UM TIME SEM MASCOTE!";
         if (teams.containsKey(id)) return "TIME JÁ EXISTE!";
-        teams.put(id, new Time(id, name, mascot));
+        teams.put(id, new Team(id, name, mascot));
         return "INCLUSÃO REALIZADA!";
     }
 
@@ -133,8 +133,8 @@ public class AVBettingController {
     }
 
     /**
-     * Realiza uma aposta a partir de um Time, uma Competição, sua colocação na tabela e um value monetário.
-     * @param teamId Código identificador do Time.
+     * Realiza uma aposta a partir de um Team, uma Competição, sua colocação na tabela e um value monetário.
+     * @param teamId Código identificador do Team.
      * @param tournamentName Nome do Tournament.
      * @param position Colocação no time na tabela do Tournament.
      * @param value Valor monetário.
@@ -144,17 +144,17 @@ public class AVBettingController {
         if (!(this.teams.containsKey(teamId))) return "APOSTA NÃO REGISTRADA. TIME NÃO EXISTE!";
         if (!(this.tournaments.containsKey(tournamentName))) return "APOSTA NÃO REGISTRADA. CAMPEONATO NÃO EXISTE";
 
-        Time time = idStringToTeam(teamId);
+        Team team = idStringToTeam(teamId);
         Tournament tournament = stringNomeParaCampeonato(tournamentName);
 
-        if (position > tournament.getLIMITEDETIMES()) return "APOSTA NÃO REGISTRADA. POSIÇÃO INVÁLIDA. NÃO HÁ TIMES SUFICIENTES.";
+        if (position > tournament.getLIMIT_PARTICIPANTS()) return "APOSTA NÃO REGISTRADA. POSIÇÃO INVÁLIDA. NÃO HÁ TIMES SUFICIENTES.";
 
         if (position < 1) return "APOSTA NÃO REGISTRADA. INSIRA UMA COLOCAÇÃO VÁLIDA. DEVE SER UM NÚMERO INTEIRO A PARTIR DE 1.";
 
         if (value <= 0) return "INSIRA UM VALOR VÁLIDO. O VALOR DA APOSTA DEVE SER UM NÚMERO MAIOR QUE 0.";
 
-        if (position == 1) time.incrementaVezesEmPrimeiro();
-        this.bets.add(new Bet(time, tournament, position, value));
+        if (position == 1) team.incrementaVezesEmPrimeiro();
+        this.bets.add(new Bet(team, tournament, position, value));
         return "APOSTA REGISTRADA!";
     }
 
@@ -165,20 +165,20 @@ public class AVBettingController {
      * @return Se o time participa ou não do campeonato.
      */
     public String checkIfTeamIsInASpecificTournament(String teamId, String tournamentName){
-        Time time = idStringToTeam(teamId);
-        if (time == null) return "TIME NÃO EXISTE!";
+        Team team = idStringToTeam(teamId);
+        if (team == null) return "TIME NÃO EXISTE!";
 
         Tournament tournament = stringNomeParaCampeonato(tournamentName);
         if (tournament == null) return "CAMPEONATO NÃO EXISTE!";
 
-        return tournament.checkIfTeamIsInTheTournament(time);
+        return tournament.checkIfTeamIsInTheTournament(team);
     }
 
     /**
      * Pega os teams cadastrados no sistema.
      * @return Par "name-value" de teams cadastrados no sistema.
      */
-    public HashMap<String, Time> getTeams() {
+    public HashMap<String, Team> getTeams() {
         return teams;
     }
 
@@ -194,7 +194,7 @@ public class AVBettingController {
         for (Bet a :
                 this.bets) {
             i++;
-            out = String.format("\n%d. [%s] %s / %s\n%s\n%d/%d\nR$ %.2f\n", i, a.getTime().getId(), a.getTime().getNome(), a.getTime().getMascote(), a.getCampeonato().getName(), a.getCampeonato().getTeams().size(), a.getCampeonato().getLIMITEDETIMES(), a.getValor());
+            out = String.format("\n%d. [%s] %s / %s\n%s\n%d/%d\nR$ %.2f\n", i, a.getTeam().getId(), a.getTeam().getName(), a.getTeam().getMascote(), a.getTournament().getName(), a.getTournament().getTeams().size(), a.getTournament().getLIMIT_PARTICIPANTS(), a.getValue());
             sb.append(out);
         }
         if (this.bets.isEmpty()) out = "NÃO HÁ NENHUMA APOSTA REGISTRADA.";
@@ -206,9 +206,9 @@ public class AVBettingController {
         sb.append("Popularidade em bets\n");
         int curIndex = 0;
         String out = null;
-        for (Time time:
+        for (Team team :
                 this.teams.values()) {
-            sb.append(time.getNome()).append(" / ").append(time.getVezesEmPrimeiro());
+            sb.append(team.getName()).append(" / ").append(team.getVezesEmPrimeiro());
             curIndex++;
             if (curIndex < teams.size()) sb.append("\n");
             out = sb.toString();
@@ -217,25 +217,25 @@ public class AVBettingController {
         return out;
     }
 
-    public String getTeam(Time time){
-        if (time == null) {
+    public String getTeam(Team team){
+        if (team == null) {
             return "TIME NÃO EXISTE!";
         } else {
-            return time.toString();
+            return team.toString();
         }
     }
 
-    public String showTeamTournaments(Time time){
+    public String showTeamTournaments(Team team){
         StringBuilder sb = new StringBuilder();
-        if (time == null) {
+        if (team == null) {
             sb.append("TIME NÃO EXISTE.");
-        } else if (time.getCampeonatos().isEmpty()) {
+        } else if (team.getCampeonatos().isEmpty()) {
             sb.append("O TIME NÃO ESTÁ INSCRITO EM NENHUM CAMPEONATO!");
         } else {
-            sb.append(String.format("Campeonatos do %s:\n", time.getNome()));
+            sb.append(String.format("Campeonatos do %s:\n", team.getName()));
             for (Tournament c:
-                    time.getCampeonatos()) {
-                sb.append(String.format("* %s - %d/%d\n", c.getName(), c.getTeams().size(), c.getLIMITEDETIMES()));
+                    team.getCampeonatos()) {
+                sb.append(String.format("* %s - %d/%d\n", c.getName(), c.getTeams().size(), c.getLIMIT_PARTICIPANTS()));
             }
         }
         return sb.toString();

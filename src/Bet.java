@@ -4,9 +4,9 @@
 public class Bet {
 
     /**
-     * Time da aposta.
+     * Team da aposta.
      */
-    private Time time;
+    private Team team;
 
     /**
      * Tournament da aposta.
@@ -14,7 +14,7 @@ public class Bet {
     private Tournament tournament;
 
     /**
-     * Colocação do time na tabela do tournament na aposta.
+     * Colocação do team na tabela do tournament na aposta.
      */
     private int colocacao;
 
@@ -24,14 +24,14 @@ public class Bet {
     private Double valor;
 
     /**
-     * Constrói uma aposta a partir de um Time, um Tournament, uma colocação e um valor monetário.
-     * @param time Time.
+     * Constrói uma aposta a partir de um Team, um Tournament, uma colocação e um valor monetário.
+     * @param team Team.
      * @param tournament Tournament.
-     * @param colocacao Colocação do time na tabela do tournament.
+     * @param colocacao Colocação do team na tabela do tournament.
      * @param valor Valor monetário apostado.
      */
-    public Bet(Time time, Tournament tournament, int colocacao, Double valor){
-        this.time = time;
+    public Bet(Team team, Tournament tournament, int colocacao, Double valor){
+        this.team = team;
         this.tournament = tournament;
         this.colocacao = colocacao;
         this.valor = valor;
@@ -41,23 +41,23 @@ public class Bet {
      * Pega o valor apostado.
      * @return Valor monetáro apostado com duas casas decimais.
      */
-    public Double getValor() {
+    public Double getValue() {
         return valor;
     }
 
     /**
-     * Pega o time sobre a qual a aposta é realizada.
-     * @return Time presente na aposta.
+     * Pega o team sobre a qual a aposta é realizada.
+     * @return Team presente na aposta.
      */
-    public Time getTime() {
-        return time;
+    public Team getTeam() {
+        return team;
     }
 
     /**
      * Pega o tournament que sobre o qual a aposta é realizada.
      * @return Tournament presente na aposta.
      */
-    public Tournament getCampeonato() {
+    public Tournament getTournament() {
         return tournament;
     }
 }

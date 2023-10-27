@@ -14,7 +14,7 @@ public class Tournament {
     /**
      * Set of teams in the tournament.
      */
-    private HashSet<Time> teams;
+    private HashSet<Team> teams;
 
     /**
      * Limite de teams participantes permitidos na tournament.
@@ -34,12 +34,12 @@ public class Tournament {
 
     /**
      * Adiciona team na tournament.
-     * @param team Time a ser adicionado na tournament.
+     * @param team Team a ser adicionado na tournament.
      * @return Se o team foi adicionado à tournament ou não.
      */
-    public String addTeamInTheTournament(Time team){
+    public String addTeamInTheTournament(Team team){
         this.teams.add(team);
-        team.adicionaCampeonato(this);
+        team.addTeamInTournament(this);
         return "TIME CADASTRADO COM SUCESSO!";
     }
 
@@ -53,10 +53,10 @@ public class Tournament {
 
     /**
      * Checa se um team específico está participando do campeonato.
-     * @param team Time que será procurado na lista de teams participates do campeonato.
+     * @param team Team que será procurado na lista de teams participates do campeonato.
      * @return Se o team desjado está participando do campeonato.
      */
-    public String checkIfTeamIsInTheTournament(Time team){
+    public String checkIfTeamIsInTheTournament(Team team){
         if (this.teams.contains(team)) return "THE TEAM IS IN THE TOURNAMENT!";
         return "THE TEAM IS NOT IN THE TOURNAMENT!";
     }
@@ -87,7 +87,7 @@ public class Tournament {
      * Pega o limite de teams permitidos na tournament.
      * @return Limite de teams permitidos na tournament.
      */
-    public int getLIMITEDETIMES() {
+    public int getLIMIT_PARTICIPANTS() {
         return this.LIMIT_PARTICIPANTS;
     }
 
@@ -95,7 +95,7 @@ public class Tournament {
      * Pega o conjunto de teams participantes da tournament.
      * @return Conjunto de teams participantes da tournament.
      */
-    public HashSet<Time> getTeams() {
+    public HashSet<Team> getTeams() {
         return this.teams;
     }
 }

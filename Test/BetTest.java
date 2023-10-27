@@ -5,28 +5,28 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BetTest {
     Bet bet;
-    Time time;
+    Team team;
     Tournament tournament;
 
     @BeforeEach
     void setUp() {
-        time = new Time("322_AM", "Am", "Cachorro");
+        team = new Team("322_AM", "Am", "Dog");
         tournament = new Tournament("NBA", 30);
-        bet = new Bet(time, tournament, 1, 100.00);
+        bet = new Bet(team, tournament, 1, 100.00);
     }
 
     @Test
-    void getValorTest() {
-        assertEquals(100.00, bet.getValor());
+    void getValueTest() {
+        assertEquals(100.00, bet.getValue());
     }
 
     @Test
-    void getTimeTest() {
-        assertEquals("Am", bet.getTime().getNome());
+    void getTeamTest() {
+        assertEquals("Am", bet.getTeam().getName());
     }
 
     @Test
-    void getCampeonatoTest() {
-        assertEquals("NBA", bet.getCampeonato().getName());
+    void getTournamentTest() {
+        assertEquals("NBA", bet.getTournament().getName());
     }
 }

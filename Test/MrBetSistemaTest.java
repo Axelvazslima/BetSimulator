@@ -17,7 +17,7 @@ class MrBetSistemaTest {
     @Test
     void stringIdParaTimeTest() {
         assertEquals("007_JB", sistema.idStringToTeam("007_JB").getId());
-        assertEquals("Exemplo", sistema.idStringToTeam("007_JB").getNome());
+        assertEquals("Exemplo", sistema.idStringToTeam("007_JB").getName());
         assertEquals("Aston Martin", sistema.idStringToTeam("007_JB").getMascote());
     }
 
@@ -29,7 +29,7 @@ class MrBetSistemaTest {
     @Test
     void stringNomeParaCampeonatoTest() {
         assertEquals("NBA", sistema.stringNomeParaCampeonato("NBA").getName());
-        assertEquals(30, sistema.stringNomeParaCampeonato("NBA").getLIMITEDETIMES());
+        assertEquals(30, sistema.stringNomeParaCampeonato("NBA").getLIMIT_PARTICIPANTS());
     }
 
     @Test
@@ -42,14 +42,14 @@ class MrBetSistemaTest {
         assertNull(sistema.idStringToTeam("322_AM"));
         sistema.adicionaTime("322_AM", "Am", "Cachorro");
         assertNotNull(sistema.idStringToTeam("322_AM"));
-        assertEquals(sistema.idStringToTeam("322_AM").getNome(), "Am");
+        assertEquals(sistema.idStringToTeam("322_AM").getName(), "Am");
         assertNotNull(sistema.idStringToTeam("007_JB"));
     }
 
     @Test
     void adicionaTimeJaExistenteTest() {
         assertEquals("TIME JÁ EXISTE!", sistema.adicionaTime("007_JB", "A", "Aston Martin"));
-        assertEquals("Exemplo", sistema.idStringToTeam("007_JB").getNome());
+        assertEquals("Exemplo", sistema.idStringToTeam("007_JB").getName());
     }
 
     @Test
