@@ -2,28 +2,27 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Sistema responsável pela lógica e funcionamento da plataforma de bets MrBet.
- * Base de todo o programa.
+ * System's logic.
  */
 public class AVBettingController {
 
     /**
-     * Mapa de teams.
+     * Collection that stores a team using its id.
      */
     private HashMap<String, Team> teams;
 
     /**
-     * Mapa de tournaments.
+     * Collection that stores a tournament using its name.
      */
     private HashMap<String, Tournament> tournaments;
 
     /**
-     * Lista de bets.
+     * List of bets.
      */
     private ArrayList<Bet> bets;
 
     /**
-     * Constrói o sistema de bets da plataforma Mr. Bet.
+     * Builds the controller of the AVBetting simulator.
      */
     public AVBettingController() {
         teams = new HashMap<>();
@@ -32,27 +31,27 @@ public class AVBettingController {
     }
 
     /**
-     * Pega o Team com o name desejado, caso ele exista.
+     * Gets the teams using its id.
      * @param id Team's id.
-     * @return Team com o name desejado.
+     * @return Desired team - if it doesn't exist then it returns null.
      */
     public Team idStringToTeam(String id) {
         return this.teams.get(id);
     }
 
     /**
-     * Pega o Tournament com o name desejado, caso ele exista.
+     * Gets a tournament using its name, otherwise it gets null.
      * @param name Tournament's name.
-     * @return Tournament com o name desejado.
+     * @return Desired tournament.
      */
     public Tournament nameToTournament(String name) {
         return this.tournaments.get(name);
     }
 
     /**
-     * Adiciona um time a um campeonato, tendo uma saída personalizada para cada caso.
-     * @param teamId Team's id a ser adicionado no campeonato
-     * @param campeonatoNome Tournament's name que receberá um time.
+     * Adds a teams to a tournament with a specific output for each case.
+     * @param teamId Team's id to be added to te tournament.
+     * @param campeonatoNome Tournament's name.
      */
     public String addTeamInTournament(String teamId, String campeonatoNome){
         Team team = idStringToTeam(teamId);
@@ -69,11 +68,11 @@ public class AVBettingController {
     }
 
     /**
-     * Cria time e o adiciona no conjunto de teams.
-     * @param id Identificador do Team.
-     * @param name Nome do Team.
-     * @param mascot Mascote do Team.
-     * @return Se a operação foi bem sucedida ou não.
+     * Creates a teams and adds it to the collection of teams.
+     * @param id Team's id.
+     * @param name Team's name.
+     * @param mascot Team's mascot
+     * @return Success of the operation.
      */
     public String registerTeam(String id, String name, String mascot){
         if (id.isBlank()) return "YOU CAN'T CREATE A TEAM WITH NO ID!";
@@ -85,7 +84,7 @@ public class AVBettingController {
     }
 
     /**
-     * Creates a tournament.
+     * Creates a tournament and adds it to the collection of tournaments.
      * @param name Tournament's name.
      * @param LIMIT_PARTICIPANTS Limit of participants in the tournament.
      * @return If the tournament was created or not.
