@@ -28,13 +28,13 @@ class MrBetSistemaTest {
 
     @Test
     void stringNomeParaCampeonatoTest() {
-        assertEquals("NBA", this.controller.stringNomeParaCampeonato("NBA").getName());
-        assertEquals(30, this.controller.stringNomeParaCampeonato("NBA").getLIMIT_PARTICIPANTS());
+        assertEquals("NBA", this.controller.nameToTournament("NBA").getName());
+        assertEquals(30, this.controller.nameToTournament("NBA").getLIMIT_PARTICIPANTS());
     }
 
     @Test
     void adicionaTimeEmCampeonatoTest() {
-        assertNull(this.controller.stringNomeParaCampeonato("UCL"));
+        assertNull(this.controller.nameToTournament("UCL"));
     }
 
     @Test

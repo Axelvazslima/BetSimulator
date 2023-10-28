@@ -95,7 +95,7 @@ public class MainAVBetting {
         System.out.print("\nTeam's id: ");
         String name = sc.nextLine().toUpperCase();
         Team team = controller.idStringToTeam(name);
-        System.out.println(controller.getTeam(team));
+        System.out.println(team);
     }
 
     /**
