@@ -37,7 +37,7 @@ public class AVBettingController {
      * @return Team com o name desejado.
      */
     public Team idStringToTeam(String id) {
-        return teams.get(id);
+        return this.teams.get(id);
     }
 
     /**
@@ -46,7 +46,7 @@ public class AVBettingController {
      * @return Tournament com o name desejado.
      */
     public Tournament stringNomeParaCampeonato(String name) {
-        return tournaments.get(name);
+        return this.tournaments.get(name);
     }
 
     /**
@@ -75,27 +75,27 @@ public class AVBettingController {
      * @param mascot Mascote do Team.
      * @return Se a operação foi bem sucedida ou não.
      */
-    public String registerTeam (String id, String name, String mascot){
-        if (id.length() == 0) return "NÃO É POSSÍVEL CRIAR UM TIME SEM UM IDENTIFICADOR TEXTUAL!";
-        if (name.length() == 0) return "NÃO É POSSÍVEL CRIAR UM TIME SEM NOME!";
-        if (mascot.length() == 0) return "NÃO É POSSÍVEL CRIAR UM TIME SEM MASCOTE!";
-        if (teams.containsKey(id)) return "TIME JÁ EXISTE!";
-        teams.put(id, new Team(id, name, mascot));
-        return "INCLUSÃO REALIZADA!";
+    public String registerTeam(String id, String name, String mascot){
+        if (id.isBlank()) return "YOU CAN'T CREATE A TEAM WITH NO ID!";
+        if (name.isBlank()) return "YOU CAN'T CREATE A NAMELESS TEAM!";
+        if (mascot.isBlank()) return "YOU CAN'T CREATE A TIME WITHOUT A MASCOT!";
+        if (teams.containsKey(id)) return "THIS TEAM ALREADY EXISTS!";
+        this.teams.put(id, new Team(id, name, mascot));
+        return "TEAM SUCCESSFULLY REGISTERED!";
     }
 
     /**
      * Cria um campeonato.
      * @param name Nome do campeonato.
-     * @param LIMITEDETIMES Limite de teams que podem ser inseridos no campeonato.
+     * @param LIMIT_PARTICIPANTS Limite de teams que podem ser inseridos no campeonato.
      * @return Se o campeonato foi criado ou não.
      */
-    public String registerTournament(String name, int LIMITEDETIMES){
-        if (name.length() == 0) return "O NOME NÃO PODE SER VAZIO!";
-        if (LIMITEDETIMES <= 0) return "O CAMPEONATO DEVE ACEITAR NO MÍNIMO UM TIME. INSIRA UM NÚMERO INTEIRO VÁLIDO!";
-        if (tournaments.containsKey(name)) return "CAMPEONATO JÁ EXISTE.";
-        tournaments.put(name, new Tournament(name, LIMITEDETIMES));
-        return "CAMPEONATO CRIADO.";
+    public String registerTournament(String name, int LIMIT_PARTICIPANTS){
+        if (name.isBlank()) return "A TOURNAMENT'S NAME CAN NOT BE BLANK!";
+        if (LIMIT_PARTICIPANTS <= 0) return "A TOURNAMENT MUST ACCEPT AT LEAST ONE TEAM!";
+        if (tournaments.containsKey(name)) return "THIS TOURNAMENT ALREADY EXISTS!";
+        tournaments.put(name, new Tournament(name, LIMIT_PARTICIPANTS));
+        return "NEW TOURNAMENT REGISTERED!";
     }
 
     /**
@@ -125,8 +125,8 @@ public class AVBettingController {
     }
 
     /**
-     * Pega a lista de bets do programa.
-     * @return Lista de bets.
+     * Get a placed list of bets.
+     * @return List of bets.
      */
     public ArrayList<Bet> getBets() {
         return this.bets;
@@ -141,21 +141,21 @@ public class AVBettingController {
      * @return Bet registrada.
      */
     public String placeBet(String teamId, String tournamentName, int position, Double value){
-        if (!(this.teams.containsKey(teamId))) return "APOSTA NÃO REGISTRADA. TIME NÃO EXISTE!";
-        if (!(this.tournaments.containsKey(tournamentName))) return "APOSTA NÃO REGISTRADA. CAMPEONATO NÃO EXISTE";
-
         Team team = idStringToTeam(teamId);
         Tournament tournament = stringNomeParaCampeonato(tournamentName);
 
-        if (position > tournament.getLIMIT_PARTICIPANTS()) return "APOSTA NÃO REGISTRADA. POSIÇÃO INVÁLIDA. NÃO HÁ TIMES SUFICIENTES.";
+        if (team == null) return "BET NOT PLACED. THE WANTED TEAM DOESN'T EXIST!";
+        if (tournament == null) return "BET NOT PLACED. THE WANTED TOURNAMENT DOESN'T EXIST!";
 
-        if (position < 1) return "APOSTA NÃO REGISTRADA. INSIRA UMA COLOCAÇÃO VÁLIDA. DEVE SER UM NÚMERO INTEIRO A PARTIR DE 1.";
+        if (position > tournament.getLIMIT_PARTICIPANTS()) return "BET NOT PLACED. INVALID POSITION, THERE ARE NOT THIS AMOUNT OF TEAMS IN THE COMPETITION!";
 
-        if (value <= 0) return "INSIRA UM VALOR VÁLIDO. O VALOR DA APOSTA DEVE SER UM NÚMERO MAIOR QUE 0.";
+        if (position < 1) return "BET NOT PLACED. YOUR POSITION MUST EQUALS OR BE GREATER THAN 1!";
+
+        if (value <= 0) return "INPUT A VALID VALUE. IT MUST BE BIGGER THAN 0!";
 
         if (position == 1) team.upByOneTimesInFirst();
         this.bets.add(new Bet(team, tournament, position, value));
-        return "APOSTA REGISTRADA!";
+        return "BET SUCCESSFULLY PLACED!";
     }
 
     /**

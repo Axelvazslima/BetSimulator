@@ -4,153 +4,137 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MrBetSistemaTest {
-    AVBettingController sistema;
+    AVBettingController controller;
 
     @BeforeEach
     void setUp() {
-        sistema = new AVBettingController();
-        sistema.registerTeam("007_JB", "Exemplo", "Aston Martin");
-        sistema.registerTournament("NBA", 30);
-        sistema.placeBet("007_JB", "NBA", 1, 1000.00);
+        this.controller = new AVBettingController();
+        this.controller.registerTeam("007_JB", "Example", "Aston Martin");
+        this.controller.registerTournament("NBA", 30);
+        this.controller.placeBet("007_JB", "NBA", 1, 1000.00);
     }
 
     @Test
     void stringIdParaTimeTest() {
-        assertEquals("007_JB", sistema.idStringToTeam("007_JB").getId());
-        assertEquals("Exemplo", sistema.idStringToTeam("007_JB").getName());
-        assertEquals("Aston Martin", sistema.idStringToTeam("007_JB").getMascot());
+        assertEquals("007_JB", this.controller.idStringToTeam("007_JB").getId());
+        assertEquals("Example", this.controller.idStringToTeam("007_JB").getName());
+        assertEquals("Aston Martin", this.controller.idStringToTeam("007_JB").getMascot());
     }
 
     @Test
     void stringIdParaTime() {
-        assertNull(sistema.idStringToTeam("Sinatra"));
+        assertNull(this.controller.idStringToTeam("Sinatra"));
     }
 
     @Test
     void stringNomeParaCampeonatoTest() {
-        assertEquals("NBA", sistema.stringNomeParaCampeonato("NBA").getName());
-        assertEquals(30, sistema.stringNomeParaCampeonato("NBA").getLIMIT_PARTICIPANTS());
+        assertEquals("NBA", this.controller.stringNomeParaCampeonato("NBA").getName());
+        assertEquals(30, this.controller.stringNomeParaCampeonato("NBA").getLIMIT_PARTICIPANTS());
     }
 
     @Test
     void adicionaTimeEmCampeonatoTest() {
-        assertNull(sistema.stringNomeParaCampeonato("UCL"));
+        assertNull(this.controller.stringNomeParaCampeonato("UCL"));
     }
 
     @Test
-    void adicionaTimeNovoTest() {
-        assertNull(sistema.idStringToTeam("322_AM"));
-        sistema.registerTeam("322_AM", "Am", "Cachorro");
-        assertNotNull(sistema.idStringToTeam("322_AM"));
-        assertEquals(sistema.idStringToTeam("322_AM").getName(), "Am");
-        assertNotNull(sistema.idStringToTeam("007_JB"));
+    void registerTeam() {
+        assertNull(this.controller.idStringToTeam("322_AM"));
+        this.controller.registerTeam("322_AM", "Am", "Cachorro");
+        assertNotNull(this.controller.idStringToTeam("322_AM"));
+        assertEquals(this.controller.idStringToTeam("322_AM").getName(), "Am");
+        assertNotNull(this.controller.idStringToTeam("007_JB"));
     }
 
     @Test
-    void adicionaTimeJaExistenteTest() {
-        assertEquals("TIME JÁ EXISTE!", sistema.registerTeam("007_JB", "A", "Aston Martin"));
-        assertEquals("Exemplo", sistema.idStringToTeam("007_JB").getName());
+    void registerAlreadyExistingTeamTest() {
+        assertEquals("THIS TEAM ALREADY EXISTS!", this.controller.registerTeam("007_JB", "A", "Aston Martin"));
+        assertEquals("Example", this.controller.idStringToTeam("007_JB").getName());
     }
 
     @Test
-    void adicionaTimeIdVazio() {
-        assertEquals("NÃO É POSSÍVEL CRIAR UM TIME SEM UM IDENTIFICADOR TEXTUAL!", sistema.registerTeam("", "Frank Sinatra", "Ema"));
+    void registerTeamWithNoIdTest() {
+        assertEquals("YOU CAN'T CREATE A TEAM WITH NO ID!", this.controller.registerTeam("", "Frank Sinatra", "Ema"));
     }
 
     @Test
-    void adicionaTimeNomeVazioTest() {
-        assertEquals("NÃO É POSSÍVEL CRIAR UM TIME SEM NOME!", sistema.registerTeam("007_JB", "", "Aston Martin"));
+    void registerNamelessTeamTest() {
+        assertEquals("YOU CAN'T CREATE A NAMELESS TEAM!", this.controller.registerTeam("007_JB", "", "Aston Martin"));
     }
 
     @Test
-    void adicionaTimeSemMascote() {
-        assertEquals("NÃO É POSSÍVEL CRIAR UM TIME SEM MASCOTE!", sistema.registerTeam("322_AB", "Nome", ""));
+    void registerTeamWithoutAMascotTest() {
+        assertEquals("YOU CAN'T CREATE A TIME WITHOUT A MASCOT!", this.controller.registerTeam("322_AB", "Name", ""));
     }
 
     @Test
-    void adicionaCampeonatoTest() {
-        assertEquals("CAMPEONATO CRIADO.", sistema.registerTournament("EUROLEAGUE", 10));
+    void registerTournamentTest() {
+        assertEquals("NEW TOURNAMENT REGISTERED!", this.controller.registerTournament("EUROLEAGUE", 10));
     }
 
     @Test
-    void adicionaCampeonatoNomeVazioTest() {
-        assertEquals("O NOME NÃO PODE SER VAZIO!", sistema.registerTournament("", 10));
+    void registerANamelessTournamentTest() {
+        assertEquals("A TOURNAMENT'S NAME CAN NOT BE BLANK!", this.controller.registerTournament("", 10));
     }
 
     @Test
-    void adicionaCampeonatoMenosQueMinimoDeTimesPermitidosTest() {
-        assertEquals("O CAMPEONATO DEVE ACEITAR NO MÍNIMO UM TIME.", sistema.registerTournament("Avestruz", 0));
-        assertEquals("O CAMPEONATO DEVE ACEITAR NO MÍNIMO UM TIME.", sistema.registerTournament("Avestruz", -1));
+    void registerTournamentWithNoTeamsAcceptanceTest() {
+        assertEquals("A TOURNAMENT MUST ACCEPT AT LEAST ONE TEAM!", this.controller.registerTournament("Summer League", 0));
+        assertEquals("A TOURNAMENT MUST ACCEPT AT LEAST ONE TEAM!", this.controller.registerTournament("Summer League", -1));
     }
 
     @Test
-    void adicionaCampeonatoJaExistenteTest() {
-        assertEquals("CAMPEONATO JÁ EXISTE.", sistema.registerTournament("NBA", 10));
+    void registerAlreadyExistingTournamentTest() {
+        assertEquals("THIS TOURNAMENT ALREADY EXISTS!", this.controller.registerTournament("NBA", 10));
     }
 
     @Test
-    void getApostasTest() {
-        assertNotNull(sistema.getBets());
+    void getBetsTest() {
+        assertNotNull(this.controller.getBets());
     }
 
     @Test
-    void adicionaApostaTest() {
-        assertEquals("APOSTA REGISTRADA!", sistema.placeBet("007_JB", "NBA", 1, 100.00));
+    void placeBetTest() {
+        assertEquals("BET SUCCESSFULLY PLACED!", this.controller.placeBet("007_JB", "NBA", 1, 100.00));
     }
 
     @Test
-    void adicionaApostaTimeInvalidoTest() {
-        assertEquals("APOSTA NÃO REGISTRADA. TIME NÃO EXISTE!", sistema.placeBet("Borussia Dortmund", "NBA", 10, 100.00));
-        assertEquals("APOSTA NÃO REGISTRADA. TIME NÃO EXISTE!", sistema.placeBet("", "NBA", 10, 100.00));
+    void placeBetInvalidTeamTest() {
+        assertEquals("BET NOT PLACED. THE WANTED TEAM DOESN'T EXIST!", this.controller.placeBet("Borussia Dortmund", "NBA", 10, 100.00));
+        assertEquals("BET NOT PLACED. THE WANTED TEAM DOESN'T EXIST!", this.controller.placeBet("", "NBA", 10, 100.00));
     }
 
     @Test
-    void adicionaApostaCampeonatoInvalidoTest() {
-        assertEquals("APOSTA NÃO REGISTRADA. CAMPEONATO NÃO EXISTE", sistema.placeBet("007_JB", "UCL", 1, 100.00));
-        assertEquals("APOSTA NÃO REGISTRADA. CAMPEONATO NÃO EXISTE", sistema.placeBet("007_JB", "", 1, 100.00));
+    void placeBetInvalidTournamentTest() {
+        assertEquals("BET NOT PLACED. THE WANTED TOURNAMENT DOESN'T EXIST!", this.controller.placeBet("007_JB", "UCL", 1, 100.00));
+        assertEquals("BET NOT PLACED. THE WANTED TOURNAMENT DOESN'T EXIST!", this.controller.placeBet("007_JB", "", 1, 100.00));
     }
 
     @Test
-    void adicionaApostaColocacaoMaiorQueOPermitidoTest() {
-        assertEquals("APOSTA NÃO REGISTRADA. POSIÇÃO INVÁLIDA. NÃO HÁ TIMES SUFICIENTES.", sistema.placeBet("007_JB", "NBA", 100, 1000.00));
+    void placeBetInvalidPositionTest() {
+        assertEquals("BET NOT PLACED. INVALID POSITION, THERE ARE NOT THIS AMOUNT OF TEAMS IN THE COMPETITION!", this.controller.placeBet("007_JB", "NBA", 100, 1000.00));
     }
 
     @Test
-    void adicionaApostaColocacaoMenorQueOPermitidoTest() {
-        assertEquals("APOSTA NÃO REGISTRADA. COLOCAÇÃO INVÁLIDA. A TABELA COMEÇA EM 1!", sistema.placeBet("007_JB", "NBA", 0, 1000.00));
-        assertEquals("APOSTA NÃO REGISTRADA. COLOCAÇÃO INVÁLIDA. A TABELA COMEÇA EM 1!", sistema.placeBet("007_JB", "NBA", -1, 1000.00));
+    void placeBetPositionLessThanOneTest() {
+        assertEquals("BET NOT PLACED. YOUR POSITION MUST EQUALS OR BE GREATER THAN 1!", this.controller.placeBet("007_JB", "NBA", 0, 1000.00));
+        assertEquals("BET NOT PLACED. YOUR POSITION MUST EQUALS OR BE GREATER THAN 1!", this.controller.placeBet("007_JB", "NBA", -1, 1000.00));
     }
 
     @Test
-    void adicionaApostaValorMenorQueOPermitidoTest() {
-        assertEquals("APOSTA NÃO REGISTRADA. O VALOR APOSTADO DEVE SER MAIOR QUE 0!", sistema.placeBet("007_JB", "NBA", 1, 0.00));
-        assertEquals("APOSTA NÃO REGISTRADA. O VALOR APOSTADO DEVE SER MAIOR QUE 0!", sistema.placeBet("007_JB", "NBA", 1, -1.00));
+    void placeBetInvalidValueTest() {
+        assertEquals("INPUT A VALID VALUE. IT MUST BE BIGGER THAN 0!", this.controller.placeBet("007_JB", "NBA", 1, 0.00));
+        assertEquals("INPUT A VALID VALUE. IT MUST BE BIGGER THAN 0!", this.controller.placeBet("007_JB", "NBA", 1, -1.00));
     }
 
     @Test
-    void adicionaApostaColocacaoInvalidaMenorQueUmTest(){
-        assertEquals("APOSTA NÃO REGISTRADA. COLOCAÇÃO INVÁLIDA. A TABELA COMEÇA EM 1!", sistema.placeBet("007_JB", "NBA", 0, 100.00));
+    void checkIfTeamIsInASpecificTournamentTest(){
+        this.controller.addTeamInTournament("007_JB", "NBA");
+        assertEquals(this.controller.checkIfTeamIsInASpecificTournament("007_JB", "NBA"), "THE TEAM IS IN THE TOURNAMENT!");
     }
 
     @Test
-    void adicionaApostaColocacaoInvalidaMaiorQuePermitidoTest(){
-        assertEquals("APOSTA NÃO REGISTRADA. POSIÇÃO INVÁLIDA. NÃO HÁ TIMES SUFICIENTES.", sistema.placeBet("007_JB", "NBA", 31, 100.00));
-    }
-
-    @Test
-    void adicionaApostaValorInvalidoMenorQueMinimoTest(){
-        assertEquals("APOSTA NÃO REGISTRADA. O VALOR APOSTADO DEVE SER MAIOR QUE 0!", sistema.placeBet("007_JB", "NBA", 1, 0.0));
-        assertEquals("APOSTA NÃO REGISTRADA. O VALOR APOSTADO DEVE SER MAIOR QUE 0!", sistema.placeBet("007_JB", "NBA", 1, -1.0));
-    }
-
-    @Test
-    void verificaTimeEmCampeonatoTimeNaoParticipaTest() {
-        assertEquals(sistema.checkIfTeamIsInASpecificTournament("007_JB", "NBA"), "O TIME NÃO ESTÁ NO CAMPEONATO!");
-    }
-
-    @Test
-    void verificaTimeEmCampeonatoTimeParticipaTest(){
-        sistema.addTeamInTournament("007_JB", "NBA");
-        assertEquals(sistema.checkIfTeamIsInASpecificTournament("007_JB", "NBA"), "O TIME ESTÁ NO CAMPEONATO!");
+    void checkIfTeamIsInASpecificTournamentAndItIsNotTest() {
+        assertEquals(this.controller.checkIfTeamIsInASpecificTournament("007_JB", "NBA"), "THE TEAM IS NOT IN THE TOURNAMENT!");
     }
 }

@@ -10,7 +10,7 @@ class TeamTest {
 
     @BeforeEach
     void setUp() {
-            team = new Team("BVB_09", "Borussia Dortmund", "Bee");
+        team = new Team("BVB_09", "Borussia Dortmund", "Bee");
         tournament = new Tournament("LP2", 20);
         team.addTeamInTournament(new Tournament("NBA", 30));
         controller = new AVBettingController();
